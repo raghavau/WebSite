@@ -1,0 +1,51 @@
+﻿@{
+    Layout="~/_Layout.cshtml";
+    Page.Title = "Filter WebGrid";
+    var db = Database.Open("NORTHWND");
+    var query = "SELECT DISTINCT Country FROM Customers ORDER BY Country";
+    var countries = db.Query(query);
+    query = "SELECT * FROM Customers WHERE CompanyName LIKE @0 AND Country LIKE @1";
+    var company = "%" + Request["company"] + "%";
+    var country = "%" + Request["country"] + "%";
+    var data = db.Query(query, company, country);
+    var columns = new[]{"CustomerID", "CompanyName", "ContactName", "Address", "City", "Country", "Phone"};
+    var grid = new WebGrid(data, columnNames: columns, rowsPerPage: 10);
+}
+
+<h1>Filter WebGrid</h1>
+<form method="post">
+    <div id="grid">
+        Company Name: <input type="text" name="company" value="@Request["company"]" />
+        Country: <select name="country">
+                    <option>Select</option>   
+            @foreach(var item in countries){
+                <option @(Request["country"] == item.Country ? " selected=\"selected\"" : "")>@item.Country</option>
+            }
+        </select>
+        <input type="submit" />
+        @grid.GetHtml(    
+            tableStyle : "table",
+            alternatingRowStyle : "alternate",
+            headerStyle : "header",
+            columns: grid.Columns(
+                grid.Column("CustomerID", "ID"),
+                grid.Column("CompanyName", "Company"),
+                grid.Column("ContactName", "Contact"),
+                grid.Column("Address"),
+                grid.Column("City"),
+                grid.Column("Country"),
+                grid.Column("Phone")
+            )
+        )
+    </div>
+</form>
+@section script{
+<script type="text/javascript">
+    $(function(){
+        $('th a, tfoot a').live('click', function() {
+            $('form').attr('action', $(this).attr('href')).submit();
+            return false;
+        });
+    });
+</script>
+}

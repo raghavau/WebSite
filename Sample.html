@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sample Design Page</title>
+        <meta name="keywords" content="@, at, recharge, at recharge, @recharge, mobile recharge, mobile, pay recharge, pay bill, mobile bill" />
+        <meta name="author" content="@Recharge" />
+        <link rel="stylesheet" type="text/css" href="/css/red.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/set2.css" />
+        <style type="text/css">
+            html, body
+            {
+                /*background-color: #F0F0F0;*//*8ab797*/
+                font-family: Calibri;
+                font-size: 15px;
+                margin: 0px;
+                padding: 0px;
+            }
+            
+            #content
+            {
+                top: 50%;
+                left: 50%;
+                width: 800px;
+                height: 500px;            
+                position: fixed;
+                margin-left: -400px;
+                margin-top: -250px;
+            }
+            
+            #header 
+            {
+                background-color: #E6E6E6;
+                height: 50px;
+                width: 100%;
+                top: 0%;
+                position: fixed;
+                text-align: center;
+                vertical-align: middle;
+            }
+            
+            #footer
+            {
+                background-color: #E6E6E6;
+                height: 20px;
+                width: 100%;
+                bottom: 0%;
+                position: fixed;
+                text-align: center;
+                font-size: 10px;
+                vertical-align: middle;
+            }
+            
+            div.login
+            {
+                background-color: #9e9e9e;
+                position: fixed;
+                right: 10px;
+                top: 5px;
+                padding: 10px;
+                color: #ffd800;
+                cursor: pointer;
+            }
+            
+            #login
+            {
+                background-color: #9e9e9e;
+                height: 300px;
+                width: 300px;
+                /*display: none;*/
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">
+            <div class="login">
+                Login or Signup
+            </div>
+        </div>
+        <div id="content">
+            <div class="tabs">
+                <ul class="tab-links">
+                    <li class="active"><a href="#tab1">Mobile</a></li>
+                    <li><a href="#tab2">DTH</a></li>
+                    <li><a href="#tab3">Data Card</a></li>
+                    <li><a href="#tab4">Bus</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab active">
+                        <p>Tab #1 content goes here!</p>
+                        <span class="input input--kohana">
+                            <input class="input__field input__field--kohana" type="text" id="input-31" />
+                            <label class="input__label input__label--kohana" for="input-31">
+                                <i class="fa fa-fw fa-phone icon icon--kohana"></i>
+                                <span class="input__label-content input__label-content--kohana">Phone</span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div id="tab2" class="tab">
+                        <p>Tab #2 content goes here!</p>
+                        <span class="input input--kaede">
+                            <input class="input__field input__field--kaede" type="text" id="input-35" />
+                            <label class="input__label input__label--kaede" for="input-35">
+                                <span class="input__label-content input__label-content--kaede">First Name</span>
+                            </label>
+                        </span>
+                        <span class="input input--kaede">
+                            <input class="input__field input__field--kaede" type="text" id="input-36" />
+                            <label class="input__label input__label--kaede" for="input-36">
+                                <span class="input__label-content input__label-content--kaede">Last Name</span>
+                            </label>
+                        </span>
+                        <span class="input input--kaede">
+                            <input class="input__field input__field--kaede" type="text" id="input-37" />
+                            <label class="input__label input__label--kaede" for="input-37">
+                                <span class="input__label-content input__label-content--kaede">Website</span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div id="tab3" class="tab">
+                        <p>Tab #3 content goes here!</p>
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="input-13" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">First Name</span>
+                            </label>
+                        </span>
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="input-14" />
+                            <label class="input__label input__label--minoru" for="input-14">
+                                <span class="input__label-content input__label-content--minoru">Middle Name</span>
+                            </label>
+                        </span>
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="input-15" />
+                            <label class="input__label input__label--minoru" for="input-15">
+                                <span class="input__label-content input__label-content--minoru">Last Name</span>
+                            </label>
+                        </span>
+                    </div>
+
+                    <div id="tab4" class="tab">
+                        <p>Tab #4 content goes here!</p>
+                        <span class="input input--nao">
+                            <input class="input__field input__field--nao" type="text" id="input-1" />
+                            <label class="input__label input__label--nao" for="input-1">
+                                <span class="input__label-content input__label-content--nao">Username</span>
+                            </label>
+                            <svg class="graphic graphic--nao" width="300%" height="100%" viewbox="0 0 1200 60" preserveaspectratio="none">
+                                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                            </svg>
+                        </span>
+                        <span class="input input--nao">
+                            <input class="input__field input__field--nao" type="text" id="input-2" />
+                            <label class="input__label input__label--nao" for="input-2">
+                                <span class="input__label-content input__label-content--nao">Email</span>
+                            </label>
+                            <svg class="graphic graphic--nao" width="300%" height="100%" viewbox="0 0 1200 60" preserveaspectratio="none">
+                                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                            </svg>
+                        </span>
+                        <span class="input input--nao">
+                            <input class="input__field input__field--nao" type="text" id="input-3" />
+                            <label class="input__label input__label--nao" for="input-3">
+                                <span class="input__label-content input__label-content--nao">Invitation Code</span>
+                            </label>
+                            <svg class="graphic graphic--nao" width="300%" height="100%" viewbox="0 0 1200 60" preserveaspectratio="none">
+                                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            &copy 2015-2200 atrecharge.com All rights reserved
+        </div>
+    </body>
+</html>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="js/classie.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.tabs .tab-links a').on('click', function(e)  {
+            var currentAttrValue = $(this).attr('href');
+            // Show/Hide Tabs
+            //$('.tabs ' + currentAttrValue).show().siblings().hide();
+            $('.tabs ' + currentAttrValue).fadeIn(500).siblings().hide();
+            // Change/remove current tab to active
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
+            e.preventDefault();
+        });
+    });
+    (function() {
+        // trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+        if (!String.prototype.trim) {
+            (function() {
+                // Make sure we trim BOM and NBSP
+                var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+                String.prototype.trim = function() {
+                    return this.replace(rtrim, '');
+                };
+            })();
+        }
+        [].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+            // in case the input is already filled..
+            if( inputEl.value.trim() !== '' ) {
+                classie.add( inputEl.parentNode, 'input--filled' );
+            }
+            // events:
+            inputEl.addEventListener( 'focus', onInputFocus );
+            inputEl.addEventListener( 'blur', onInputBlur );
+        } );
+        function onInputFocus( ev ) {
+            classie.add( ev.target.parentNode, 'input--filled' );
+        }
+        function onInputBlur( ev ) {
+            if( ev.target.value.trim() === '' ) {
+                classie.remove( ev.target.parentNode, 'input--filled' );
+            }
+        }
+    })();
+</script>

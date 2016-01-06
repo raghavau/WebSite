@@ -1,0 +1,37 @@
+﻿@{
+    
+}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <title>.NET Corner</title>
+        <link type="text/css" rel="stylesheet" href="css/StyleSheet.css">
+        @RenderSection("script", false)
+    </head>
+    <body>
+        <div class="content">
+            <div id="menu">
+                <ul>
+                    <li><a href="index.cshtml">Home</a></li>
+                    <li><a href="articles.cshtml">Articles</a></li>
+                    <li><a href="about.cshtml">About</a></li>
+                    <li><a href="contact.cshtml">Contact Us</a></li>
+                </ul>
+            </div>
+            @RenderBody()
+        </div>
+        <div class="header">
+            <header>
+                <h1>.NET Corner</h1>
+                <h5>..a good guide for beginner</h5>
+            </header>
+        </div>
+        <div class="footer">
+            <footer>
+                This site was built by using Microsoft WebMatrix.
+            </footer>
+        </div>
+    </body>
+</html>

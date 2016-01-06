@@ -1,0 +1,49 @@
+﻿@{
+    Layout="~/_Layout.cshtml";
+    Page.Title = "WebGrid";
+    var db = Database.Open("rfidConnectionString");
+    var query = "SELECT ReaderNo,dbo.fn_GetReaderName(ReaderNo) Reader,TaskCode,SubTaskCode,TagNo,TruckNo,dbo.fn_GetRefCode(TaskCode) RefCode, "
+            + "ReadTime LoadDate,Location,dbo.fn_GetLocation(Location) LoadLocation FROM dbo.InternalFleet_Load WHERE Readerno=90 "
+            + "Order By TaskCode Desc,TruckNo";
+    var data = db.Query(query);
+    var columns = new[]{"SlNo", "ReaderNo", "Reader", "TaskCode", "TagNo", "TruckNo", "RefCode", "LoadDate", "Location"};
+    var grid = new WebGrid(data, columnNames: columns, rowsPerPage: 15);
+    int rowVal=0;
+}
+<style type="text/css">
+    .webgrid-table td, th { border: 1px solid #98BF21;   }
+    .webgrid-header { background-color: #A7C942; color: #FFFFFF; text-align: left;}
+    .webgrid-alternating-row { background-color: #EAF2D3; }
+    .colWidth { width: 200px;  }
+    #Outer { font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;}
+    #GridBody{width:1020px ;height:200px; overflow-y: scroll; border:solid 1px #e8eef4;  }
+    #GridHeader table { width:1022px; text-align:left; margin-top: 0px; border: solid 1px #A7C942; padding:0px; border-collapse:collapse; } 
+    #GridFooter  {  border:solid 1px #e8eef4; width:1020px; }
+    #GridHeader table th { width: 200px;}
+</style>
+
+<h1> WebGrid</h1>
+<form method="post">
+    <div id="grid">
+        @grid.GetHtml(    
+            tableStyle: "webgrid-table",
+            headerStyle: "webgrid-header",
+            footerStyle: "webgrid-footer",
+            alternatingRowStyle: "webgrid-alternating-row",
+            selectedRowStyle: "webgrid-selected-row",
+            rowStyle: "webgrid-row-style",
+            mode: WebGridPagerModes.All,
+            columns: grid.Columns(
+                grid.Column("SlNo", format: item=> rowVal = rowVal + 1),
+                grid.Column("ReaderNo", "ReaderNo"),
+                grid.Column("Reader", "Reader"),
+                grid.Column("TaskCode", "TaskCode"),
+                grid.Column("TagNo"),
+                grid.Column("TruckNo"),
+                grid.Column("RefCode"),
+                grid.Column("LoadDate"),
+                grid.Column("Location")
+            )
+        )
+    </div>
+</form>

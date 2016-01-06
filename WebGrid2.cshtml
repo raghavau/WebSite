@@ -1,0 +1,79 @@
+﻿@{
+    Layout="~/_Layout.cshtml";
+    Page.Title = "WebGrid";
+    var db = Database.Open("rfidConnectionString");
+    var query = ";WITH TempTbl AS(SELECT ROW_NUMBER() OVER(PARTITION BY TruckNo, RefCode, TaskCode, LoadDate, UnLoadDate ORDER BY TruckNo) DuplicateRow, "
+            + "TagNo,TruckNo,TaskCode,SubTaskCode,RefCode,LoadLocationId,LoadLocation,LoadOperation,LoadDate,UnLoadLocationId, "
+            + "UnLoadLocation,UnLoadOperation,UnLoadDate,Diff  "
+            + "FROM (Select TagNo,TruckNo,TaskCode,SubTaskCode,RefCode,LoadLocationId,"
+            + "(Select LocName From LocationMaster Where LocId = LoadLocationId) LoadLocation,LoadOperation,LoadDate,UnLoadLocationId,"
+            + "(Select LocName From LocationMaster Where LocId = UnLoadLocationId) UnLoadLocation,UnLoadOperation,UnLoadDate,"
+            + "CASE WHEN LoadDate>UnLoadDate THEN Convert(varchar(8), (LoadDate - UnLoadDate), 108) "
+            + "ELSE Convert(varchar(8), (UnLoadDate - LoadDate), 108) END Diff "
+            + "From (Select A.TagNo,A.TruckNo,A.TaskCode,A.SubTaskCode,C.RefCode,A.ReaderOperation LoadOperation,A.Location LoadLocationId,"
+            + "A.ReadTime LoadDate,'UnLoad' UnLoadOperation,(Select Top 1 ReadTime From InternalFleet_UnLoad "
+            + "Where TagNo = A.TagNo And TruckNo = A.TruckNo And TaskCode = A.TaskCode "
+            + "And A.ReadTime < ReadTime Order By ABS(DATEDIFF(n, A.ReadTime, ReadTime))) UnLoadDate,"
+            + "(Select Top 1 Location From InternalFleet_UnLoad Where TagNo = A.TagNo And TruckNo = A.TruckNo And TaskCode = A.TaskCode "
+            + "And CONVERT(Date, ReadTime, 103) BETWEEN CONVERT(Date, A.ReadTime, 103) AND CONVERT(Date, A.ReadTime + 1, 103) "
+            + "Order By ABS(DATEDIFF(n, A.ReadTime, ReadTime))) UnLoadLocationId "
+            + "From InternalFleet_Load A, Task_Tbl C Where A.TaskCode = C.TaskCode AND A.TaskCode=1958) D  "
+            + "Union All  "
+            + "Select TagNo,TruckNo,TaskCode,SubTaskCode,RefCode,LoadLocationId, "
+            + "(Select LocName From LocationMaster Where LocId = LoadLocationId) LoadLocation,LoadOperation,LoadDate,UnLoadLocationId, "
+            + "(Select LocName From LocationMaster Where LocId = UnLoadLocationId) UnLoadLocation,UnLoadOperation,UnLoadDate, "
+            + "CASE WHEN LoadDate>UnLoadDate THEN Convert(varchar(8), (LoadDate - UnLoadDate), 108)  "
+            + "ELSE Convert(varchar(8), (UnLoadDate - LoadDate), 108) END Diff  "
+            + "From (Select A.TagNo,A.TruckNo,A.TaskCode,A.SubTaskCode,C.RefCode,'Load' LoadOperation, "
+            + "(Select Top 1 ReadTime From InternalFleet_Load Where TagNo = A.TagNo And TruckNo = A.TruckNo And TaskCode = A.TaskCode  "
+            + "And ReadTime < A.ReadTime Order By ABS(DATEDIFF(n, A.ReadTime, ReadTime))) LoadDate, "
+            + "(Select Top 1 Location From InternalFleet_Load Where TagNo = A.TagNo And TruckNo = A.TruckNo And TaskCode = A.TaskCode  "
+            + "And CONVERT(Date, ReadTime, 103) BETWEEN CONVERT(Date, A.ReadTime, 103) AND CONVERT(Date, A.ReadTime + 1, 103)  "
+            + "Order By ABS(DATEDIFF(n, A.ReadTime, ReadTime))) LoadLocationId,A.ReaderOperation UnLoadOperation,A.Location UnLoadLocationId, "
+            + "A.ReadTime UnLoadDate From InternalFleet_UnLoad A, Task_Tbl C Where A.TaskCode = C.TaskCode AND A.TaskCode=1958) D) E) "
+            + "SELECT TagNo,TruckNo,TaskCode,SubTaskCode,RefCode,LoadLocationId,LoadLocation,LoadOperation, "
+            + "CASE WHEN ROW_NUMBER() OVER(PARTITION BY TagNo, TruckNo, RefCode, TaskCode, LoadDate ORDER BY TruckNo) = 1 THEN "
+            + "CONVERT(varchar(10), LoadDate , 105) + ' ' + CONVERT(varchar(10), LoadDate , 108) ELSE NULL END LoadDate, "
+            + "UnLoadLocationId,UnLoadLocation,UnLoadOperation, "
+            + "CASE WHEN ROW_NUMBER() OVER(PARTITION BY TagNo, TruckNo, RefCode, TaskCode, UnLoadDate ORDER BY LoadDate DESC,TruckNo) > 1 THEN "
+            + "NULL ELSE CONVERT(varchar(10), UnLoadDate , 105) + ' ' + CONVERT(varchar(10), UnLoadDate , 108) END UnLoadDate, "
+            + "CASE WHEN ROW_NUMBER() OVER(PARTITION BY TagNo, TruckNo, RefCode, TaskCode, UnLoadDate ORDER BY LoadDate DESC,TruckNo) > 1 THEN NULL ELSE Diff END Diff, "
+            + "ROW_NUMBER() OVER(PARTITION BY TagNo, TruckNo, RefCode, TaskCode, UnLoadDate ORDER BY LoadDate DESC,TruckNo) RowNumber "
+            + "FROM TempTbl tt WHERE tt.DuplicateRow=1 ORDER BY TruckNo,LoadDate";
+    var data = db.Query(query);
+    var columns = new[]{"TagNo", "TruckNo", "TaskCode", "RefCode", "LoadLocation", "LoadDate", "UnLoadLocation", "UnLoadDate", "Diff"};
+    var grid = new WebGrid(data, columnNames: columns, rowsPerPage: 10);
+}
+<h1> WebGrid</h1>
+<form method="post">
+    <div id="grid">
+        <input type="text" name="company" value="@Request["Task"]" />
+        <input type="submit" />
+        @grid.GetHtml(    
+            tableStyle : "table",
+            alternatingRowStyle : "alternate",
+            headerStyle : "header",
+            columns: grid.Columns(
+                grid.Column("TagNo", "TagNo"),
+                grid.Column("TruckNo", "TruckNo"),
+                grid.Column("TaskCode", "TaskCode"),
+                grid.Column("RefCode"),
+                grid.Column("LoadLocation"),
+                grid.Column("LoadDate"),
+                grid.Column("UnLoadLocation"),
+                grid.Column("UnLoadDate"),
+                grid.Column("Diff")
+            )
+        )
+    </div>
+</form>
+@section script{
+<script type="text/javascript">
+    $(function(){
+        $('th a, tfoot a').live('click', function() {
+            $('form').attr('action', $(this).attr('href')).submit();
+            return false;
+        });
+    });
+</script>
+}
