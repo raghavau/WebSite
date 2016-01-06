@@ -2,7 +2,7 @@
   <name>KPCL</name>
   <description>Sample Application developing for Krishnapatnam Port Company Ltd.</description>
   <author href="http://www.krishnapatnamport.com" email="support@krishnapatnamport.com">KPCL IT Team</author>
-  <content src="index.html"/>
+  <content src="_Layout.cshtml"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
