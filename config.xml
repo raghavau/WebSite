@@ -1,7 +1,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.kpcl.helloworld" version="1.0.43">
-  <name>KPCL</name>
-  <description>Sample Application developing for Krishnapatnam Port Company Ltd.</description>
-  <author href="http://www.krishnapatnamport.com" email="support@krishnapatnamport.com">KPCL IT Team</author>
+  <name>WebSite1</name>
+  <description>Sample Web Application with razor engine</description>
+  <author href="http://www.techjeel.com" email="techjeel.2015@gmail.com">Tech Jeel Team</author>
   <content src="WebGrid.cshtml"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
